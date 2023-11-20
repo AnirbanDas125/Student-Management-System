@@ -41,5 +41,17 @@ public class StudentService {
 		
 	}
 
+	public ResponseEntity<List<Student>> findAllStudentBySchool(Integer schoolId) {
+		List<Student> studentsBySchoolId = new ArrayList<>();
+		try {
+			studentsBySchoolId = studentDao.findBySchoolId(schoolId);
+		}catch(Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(new ArrayList<>(),HttpStatus.BAD_GATEWAY);
+		}
+		
+		return new ResponseEntity<>(studentsBySchoolId,HttpStatus.OK);
+	}
+
 
 }
