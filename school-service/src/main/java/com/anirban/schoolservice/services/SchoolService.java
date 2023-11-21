@@ -1,6 +1,7 @@
 package com.anirban.schoolservice.services;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,12 +12,18 @@ import org.springframework.stereotype.Service;
 
 import com.anirban.schoolservice.entitiesandmodels.School;
 import com.anirban.schoolservice.repositories.SchoolDao;
+import com.anirban.schoolservice.repositories.StudentInterface;
+import com.anirban.schoolservice.wrappers.Response;
+import com.anirban.schoolservice.wrappers.Student;
 
 @Service
 public class SchoolService {
 	
 	@Autowired
 	private SchoolDao schoolDao;
+	
+	@Autowired
+	private StudentInterface studentInterface;
 
 	public ResponseEntity<String> addSchool(School school) {
 		try{
@@ -50,6 +57,22 @@ public class SchoolService {
 		
 		return new ResponseEntity<>(school,HttpStatus.OK);
 		
+		
+	}
+
+	public ResponseEntity<Response> getStudentsBySchool(Integer schoolId) {
+		Response response = new Response();
+		List<Student> students = studentInterface.findAllStudentsBySchool(schoolId).getBody();
+		Optional<School> opSc = schoolDao.findById(schoolId);
+		
+		if(opSc.isEmpty()) {
+			throw new RuntimeException("Could not find a school by Id->"+schoolId);
+		}
+		
+		response.setStudens(students);
+		response.setSchool(opSc.get());
+		
+		return new ResponseEntity<>(response,HttpStatus.OK);
 		
 	}
 

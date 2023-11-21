@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.anirban.schoolservice.entitiesandmodels.School;
 import com.anirban.schoolservice.services.SchoolService;
+import com.anirban.schoolservice.wrappers.Response;
 
 @RestController
 @RequestMapping("/school")                   /* http://localhost:8082 */
@@ -36,4 +37,10 @@ public class SchoolController {
 	public ResponseEntity<School> getSchoolById(@PathVariable Integer schoolId){
 		return schoolService.getSchoolById(schoolId);
 	}
+	
+	@GetMapping("/all-students-by-school/{schoolId}")
+	public ResponseEntity<Response> getStudentsBySchool(@PathVariable Integer schoolId){
+		return schoolService.getStudentsBySchool(schoolId);
+	}
+	
 }
