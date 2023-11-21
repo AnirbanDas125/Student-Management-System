@@ -15,7 +15,7 @@ import com.anirban.schoolservice.entitiesandmodels.School;
 import com.anirban.schoolservice.services.SchoolService;
 
 @RestController
-@RequestMapping("/school")
+@RequestMapping("/school")                   /* http://localhost:8082 */
 public class SchoolController {
     
 	@Autowired
